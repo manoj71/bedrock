@@ -12,10 +12,10 @@ describe('site.js', function () {
     describe('getPlatform', function () {
 
         it('should identify old-Windows', function () {
-            expect(window.site.getPlatform('Mozilla/4.0 (compatible; MSIE 4.01; Windows 95)', 'foo')).toBe('oldwin');
-            expect(window.site.getPlatform('Mozilla/4.0 (compatible; MSIE 4.01; Windows 98)', 'foo')).toBe('oldwin');
-            expect(window.site.getPlatform('Mozilla/2.0 (compatible; MSIE 3.0; Windows 3.1)', 'foo')).toBe('oldwin');
-            expect(window.site.getPlatform('Mozilla/4.0 (compatible; MSIE 5.05; Windows NT 4.0)', 'foo')).toBe('oldwin');
+            expect(window.site.getPlatform('Mozilla/4.0 (compatible; MSIE 4.01; Windows 95)', 'foo')).toBe('other');
+            expect(window.site.getPlatform('Mozilla/4.0 (compatible; MSIE 4.01; Windows 98)', 'foo')).toBe('other');
+            expect(window.site.getPlatform('Mozilla/2.0 (compatible; MSIE 3.0; Windows 3.1)', 'foo')).toBe('other');
+            expect(window.site.getPlatform('Mozilla/4.0 (compatible; MSIE 5.05; Windows NT 4.0)', 'foo')).toBe('other');
         });
 
         it('should identify Windows', function () {
@@ -40,13 +40,7 @@ describe('site.js', function () {
         });
 
         it('should identify old-Mac', function () {
-            expect(window.site.getPlatform('foo', 'MacPPC')).toBe('oldmac');
-            expect(window.site.getPlatform('foo', 'Mac')).toBe('oldmac');
-            expect(window.site.getPlatform('Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_8; ja-jp) AppleWebKit/533.20.25 (KHTML, like Gecko) Version/5.0.4 Safari/533.20.27', 'foo')).toBe('oldmac');
-            expect(window.site.getPlatform('Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_4_11; nl-nl) AppleWebKit/533.16 (KHTML, like Gecko) Version/4.1 Safari/533.16', 'foo')).toBe('oldmac');
-            expect(window.site.getPlatform('Mozilla/4.0 (compatible; MSIE 5.23; Mac_PowerPC)', 'foo')).toBe('oldmac');
-            expect(window.site.getPlatform('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3 (KHTML, like Gecko) Version/5.1.3 Safari/534.53.10', 'foo')).toBe('oldmac');
-            expect(window.site.getPlatform('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:21.0) Gecko/20100101 Firefox/21.0', 'foo')).toBe('oldmac');
+            expect(window.site.getPlatform('Mozilla/4.0 (compatible; MSIE 5.23; Mac_PowerPC)', 'foo')).toBe('other');
         });
 
         it('should identify iOS', function () {
@@ -64,13 +58,6 @@ describe('site.js', function () {
         it('should identify OSX', function () {
             expect(window.site.getPlatform('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:53.0) Gecko/20100101 Firefox/53.0', 'foo')).toBe('osx');
             expect(window.site.getPlatform('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10) AppleWebKit/538.10.3 (KHTML, like Gecko) Chrome/21.0.1180.89 Safari/537.1', 'foo')).toBe('osx');
-        });
-
-        it('should identify Firefox OS', function () {
-            expect(window.site.getPlatform('Mozilla/5.0 (Mobile; rv:26.0) Gecko/26.0 Firefox/26.0', '')).toBe('fxos');
-            expect(window.site.getPlatform('Mozilla/5.0 (Tablet; rv:26.0) Gecko/26.0 Firefox/26.0', '')).toBe('fxos');
-            // Firefox OS TV
-            expect(window.site.getPlatform('Mozilla/5.0 (FreeBSD; Viera; rv:34.0) Gecko/20100101 Firefox/34.0', '')).toBe('fxos');
         });
     });
 

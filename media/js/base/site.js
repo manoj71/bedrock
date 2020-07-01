@@ -11,29 +11,6 @@
             pf = (pf === '') ? '' : pf || navigator.platform;
             ua = ua || navigator.userAgent;
 
-            if (/Win(16|9[x58]|NT( [1234]| 5\.0| [^0-9]|[^ -]|$))/.test(ua) ||
-                    /Windows ([MC]E|9[x58]|3\.1|4\.10|NT( [1234]\D| 5\.0| [^0-9]|[^ ]|$))/.test(ua) ||
-                    /Windows_95/.test(ua)) {
-                /**
-                 * Officially unsupported platforms are Windows 95, 98, ME, NT 4.x, 2000
-                 * These regular expressions match:
-                 *  - Win16
-                 *  - Win9x
-                 *  - Win95
-                 *  - Win98
-                 *  - WinNT (not followed by version or followed by version <= 5)
-                 *  - Windows ME
-                 *  - Windows CE
-                 *  - Windows 9x
-                 *  - Windows 95
-                 *  - Windows 98
-                 *  - Windows 3.1
-                 *  - Windows 4.10
-                 *  - Windows NT (not followed by version or followed by version <= 5)
-                 *  - Windows_95
-                 */
-                return 'oldwin';
-            }
             if (pf.indexOf('Win32') !== -1 ||
                     pf.indexOf('Win64') !== -1) {
                 return 'windows';
@@ -44,12 +21,6 @@
             if (/linux/i.test(pf) || /linux/i.test(ua)) {
                 return 'linux';
             }
-            if (pf.indexOf('MacPPC') !== -1) {
-                return 'oldmac';
-            }
-            if (/Mac OS X 10.[0-8]\D/.test(ua)) {
-                return 'oldmac';
-            }
             if (pf.indexOf('iPhone') !== -1 ||
                     pf.indexOf('iPad') !== -1 ||
                     pf.indexOf('iPod') !== -1 ||
@@ -58,15 +29,6 @@
             }
             if (ua.indexOf('Mac OS X') !== -1) {
                 return 'osx';
-            }
-            if (ua.indexOf('MSIE 5.2') !== -1) {
-                return 'oldmac';
-            }
-            if (pf.indexOf('Mac') !== -1) {
-                return 'oldmac';
-            }
-            if (pf === '' && /Firefox/.test(ua)) {
-                return 'fxos';
             }
 
             return 'other';
@@ -155,15 +117,10 @@
         var _version = version ? parseFloat(version) : 0;
 
         if (platform === 'windows') {
-            // Add class to allow Windows XP/Vista users to download Firefox 52 ESR, though these
-            // legacy platforms are now officially unsupported
+            // Add class for Windows XP/Vista users to display
+            // unsupported messaging on /download/thanks/ page.
             if (_version >= 5.1 && _version <= 6) {
                 h.className += ' xpvista';
-            }
-
-            // Add class to support downloading Firefox for Windows 64-bit on Windows 7 and later
-            if (_version >= 6.1) {
-                h.className += ' win7up';
             }
         } else {
             h.className = h.className.replace('windows', platform);
@@ -179,13 +136,10 @@
 
             if (isARM) {
                 h.className += ' arm';
-
-                // Add class to support downloading Firefox for Android on ARMv7 and later
-                if (parseFloat(isARM[1]) >= 7) {
-                    h.className += ' armv7up';
-                }
             }
         }
+
+        // Used for 64bit download link on Linux.
         if (archSize === 64) {
             h.className += ' x64';
         }
